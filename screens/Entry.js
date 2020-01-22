@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { gstyles } from '../styles/global';
+import {setLoggedInInfo, getLoggedInInfo, getUsers} from "../global/global";
 
 const Entry = props => {
 
@@ -10,47 +11,34 @@ const Entry = props => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    getLoggedInInfo();
+    getLoggedInInfo().then(function(res){
+      if(res !== null){
+        if(res === "true"){
+          props.navigation.navigate("OGT");
+        }
+      }
+    })
   }, [])
 
-  async function getLoggedInInfo(){
-    try {
-      const value = await AsyncStorage.getItem('loggedinUser')
-      if(value !== null) {
-        props.navigation.navigate("OGT");
-      }
-    }catch(e) {
-      // error reading value
-    }
-  }
-
-  async function getUsers(){
-    try {
-      const value = await AsyncStorage.getItem('users')
-      return value;
-    }catch(e) {
-      throw e;
-    }
-  }
-
   function authLogin(){
-    let login = false;
-    getUsers().then(function(users){
-      if(users !== null){
-        users.map(function(item){
-          if(item.username === username && item.password === password)
-            login = true;
-        })
-      }
-    }).catch(function(err){console.log(err)})
-    return login;
+    
   }
 
   function login(){
-    if(authLogin())
-      props.navigation.navigate("OGT");
-    else  
-      alert("Unauthorized login");
+    getUsers().then(function(user){
+      if(user !== null){
+        const item = JSON.parse(user);
+        console.log({item: item, res: {username, password}})
+        if(item.username === username && item.password === password){
+          setLoggedInInfo("true").then(function(){
+            props.navigation.navigate("OGT");
+          }).catch(function(){alert("Something went wrong")})
+        }
+        else{  
+          alert("Unauthorized login");
+        }
+      }
+    }).catch(function(){alert("Something went wrong")})
   }
 
   return(

@@ -110,52 +110,16 @@ const Signup = props => {
   }
 
   function createUser(){
-    getUsers().then(function(value){
-      let uniqueUser = true;
-      if(value !== null){
-        value.map(function(item){
-          if(item.username === username && item.password === password){
-            uniqueUser = false;
-          }
-        })
-      }
-      return {value, uniqueUser};
-    }).then(function(res){
-      if(res.uniqueUser){
-        let newUser = user;
-        newUser.username = username;
-        newUser.password = password;
-        newUser.priK = "5f904136bb28a28771acb40732d3909ca7aea2234c5288d7eb83118d168e47da";
-        newUser.pubK = "c040e1c3a2e1cb69c2a5ad7f471c8c36dccfdf25d7cb3f09c4932485b23217ec";
+    let newUser = user;
+    newUser.username = username;
+    newUser.password = password;
+    newUser.priK = "5f904136bb28a28771acb40732d3909ca7aea2234c5288d7eb83118d168e47da";
+    newUser.pubK = "c040e1c3a2e1cb69c2a5ad7f471c8c36dccfdf25d7cb3f09c4932485b23217ec";
 
-        if(res.value !== null)
-          res.value.push(newUser);
-        else
-          res.value = [newUser];
-
-          setUSer(res.value).then(function(){
-            console.log("new user created!");
-          })
-      }
+    setUSer(JSON.stringify(newUser)).then(function(res){
+      console.log("new user created!");
     })
     .catch(function(err){console.log(err)})
-  }
-
-  async function getUsers(){
-    try {
-      const value = await AsyncStorage.getItem('users')
-      return value;
-    }catch(e) {
-      throw e;
-    }
-  }
-
-  async function setUSer(_val){
-    try {
-      await AsyncStorage.setItem('users', _val);
-    } catch(e) {
-      throw e;
-    }
   }
 
   return(

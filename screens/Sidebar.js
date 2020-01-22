@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import { gstyles } from '../styles/global';
-
+import {setLoggedInInfo} from "../global/global";
 
 const MenuItem = props => {
   return(
@@ -23,6 +23,13 @@ const Sidebar = (props) => {
     </Icon.Button>
   )
   const nav = props.nav.navigate;
+
+  function logout(){
+    setLoggedInInfo("false").then(function(){
+      nav("Entry");
+    })
+  }
+
   return(
     <View style={styles.container} >
       <View style={styles.wrapper}>
@@ -43,7 +50,7 @@ const Sidebar = (props) => {
           <MenuItem text={"Complaints"} nav={nav} navTo={"Complaints"}/>
           <MenuItem text={"eKYC"} nav={nav} navTo={"Complaints"}/>
           <MenuItem text={"Settings"} nav={nav} navTo={"Complaints"}/>
-          <MenuItem text={"Logout"} nav={nav} navTo={"Complaints"}/>
+          <MenuItem text={"Logout"} nav={logout} navTo={true}/>
         </View>
       </View>
       <TouchableWithoutFeedback onPress={()=>props.setMenu(false)}>
