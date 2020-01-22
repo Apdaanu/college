@@ -8,6 +8,7 @@ import OngoingTransactions from './screens/OngoingTransactions';
 import Complaints from './screens/Complaints';
 import Entry from './screens/Entry';
 import Signup from './screens/Signup';
+import Profile from './screens/Profile';
 
 
 const App = createStackNavigator({
@@ -32,6 +33,12 @@ const App = createStackNavigator({
   Signup: {
     screen: Signup,
     navigationOptions: ({navigation}) => ({
+      headerShown: false
+    })
+  },
+  Profile: {
+    screen: Profile,
+    navigationOptions: ({}) => ({
       headerShown: false
     })
   }

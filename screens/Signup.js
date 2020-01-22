@@ -5,6 +5,7 @@ import { gstyles, color } from '../styles/global';
 import { TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 import user from "../models/user";
+import {setUSer, setLoggedInInfo} from "../global/global";
 
 const Signup = props => {
   
@@ -116,7 +117,10 @@ const Signup = props => {
     newUser.priK = "5f904136bb28a28771acb40732d3909ca7aea2234c5288d7eb83118d168e47da";
     newUser.pubK = "c040e1c3a2e1cb69c2a5ad7f471c8c36dccfdf25d7cb3f09c4932485b23217ec";
 
-    setUSer(JSON.stringify(newUser)).then(function(res){
+    setUSer(JSON.stringify(newUser)).then(function(){
+      setLoggedInInfo("true").then(function(){
+        props.navigation.navigate("OGT");
+      })
       console.log("new user created!");
     })
     .catch(function(err){console.log(err)})

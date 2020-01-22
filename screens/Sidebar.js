@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableWithoutFeedback} from "react-native";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { gstyles } from '../styles/global';
 import {setLoggedInInfo} from "../global/global";
 
@@ -15,10 +15,10 @@ const MenuItem = props => {
 const Sidebar = (props) => {
   const MyButton = (
     <Icon.Button
-      name="left"
+      name="user-circle"
       backgroundColor="#f5f5f5"
       color="#000"
-      onPress={()=>props.setMenu(!props.menu)}
+      onPress={()=>nav("Profile")}
     >
     </Icon.Button>
   )
